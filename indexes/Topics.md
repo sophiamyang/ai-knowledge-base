@@ -13,3 +13,8 @@ type: "topic-index"
 - [[topics/Coding Agents|Coding Agents]]
 - [[topics/Developer Tools|Developer Tools]]
 - [[topics/Enterprise AI|Enterprise AI]]
+- [[topics/Foundation Models|Foundation Models]]
+- [[topics/Model Training|Model Training]]
+- [[topics/Open Source AI|Open Source AI]]
+- [[topics/Product Development|Product Development]]
+- [[topics/Web Platform|Web Platform]]
