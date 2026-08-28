@@ -1,0 +1,11 @@
+# Owned/tracked by the main ai-weekly-reads repo — not duplicated here
+Home.md
+README.md
+templates/
+
+# Local Obsidian workspace state
+.obsidian/
+
+# Scratch
+.DS_Store
+.*.tmp
