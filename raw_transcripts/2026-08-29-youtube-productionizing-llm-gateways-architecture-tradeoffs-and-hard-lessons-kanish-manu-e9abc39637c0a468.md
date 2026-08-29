@@ -17,313 +17,284 @@ created: "2026-08-29"
 
 I'm Kanish Manuja.
 I'm a principal engineer at Twilio.
-
 Let's start with a quick show of hands.
-Who here has seen the message
-"Something went wrong. Please try again."?
-
+Who here has seen the message,
+"Something went wrong. Please try again."
 Well, we have a few lucky ones and a few that have had a good lunch.
 So, behind that simple message is actually a system
 that is very complex,
 that serves you that message despite the model providers being down.
-
 And that's what we're going to productionize today, or discuss productionizing today.
-
 So, what is an LLM gateway?
-An LLM gateway is an entry point, or a middleware, between your apps and the model providers behind them.
+An LLM gateway is an entry point or a middleware between your apps and the model providers behind them.
 It does a bunch of things:
-routing, authentication, fallback, rate limits, all kinds of governance that you can think of.
-
+routing, authentication, fall back, rate limits, all kinds of governance you can think of.
 And right at the heart of the gateway
 is a fight between four things.
 It's availability, latency, your guardrails, and costs.
 In case of a degradation, you cannot maximize all four.
 You need to pick what you want.
 So, with this talk,
-if you use an LLM gateway, I want to help- I want to help you to make that trade-off for your use case.
-And if you design a gateway, I want you to design or provide those levers to your callers and customers
-so that your customers are happy.
-
+if you use an LLM gateway, I want you to help I want to help you to make that trade-off for your use case.
+And if you design a gateway, I want you to design or provide those levers to your callers and customers,
+so that
+your customers are happy.
 Let's start with availability.
-
 If you have a single model provider,
 their ceiling is your ceiling.
 Their outage is your outage.
-
-So in typical software engineering,
-the way you tackle unreliable dependency is by retrying:
-retrying with exponential backoffs,
+So, in typical software engineering,
+the way you tackle unreliable dependency is by retrying.
+Retrying with exponential backoffs,
 with jitters.
-And when all of that fails, you have a circuit breaker that trips after you've seen sufficient failures, and you stop calling the damn thing.
-
+And when all of that fails, you have a circuit breaker that trips after you've seen sufficient failures and you stop calling the damn thing.
 This is not enough for LLMs.
 LLMs are very different compared to your fast, cheap APIs that you retry on.
-Retrying an LLM API eats into your latency budget really fast.
+Retrying an LLM
+API eats into your latency budget really fast.
 And also, tripping over a circuit breaker when you have another
 perfectly fine model provider to route to doesn't make sense.
 You should use the second model provider.
-And third, as I said,
-the calls are slow and expensive, so blind retries just multiply your cost and your tail latencies.
-
+And third, as I said, the calls are slow and expensive, so blind retries just multiply your cost and your tail latencies.
 So, what is a better idea here?
 It is actually a per-request fallback.
 What that means is you can actually try model provider A
 and then, in sequence, try model provider B if your request to model provider A fails.
-Another option to consider here is you can fire a request to both the providers in parallel,
-but that's only if you're highly, highly
-obsessed with latencies, because that's just going to double your cost.
-
-Some of the similar circuit-breaking patterns apply here to LLMs as well.
-If you know that your primary has been failing
+Another option to consider here is you can fire requests to both the providers in parallel.
+But that's only if you're highly, highly obsessed with latencies, because that's just going to double your cost.
+Some of the similar circuit breaking patterns apply here to LLMs as well.
+If you know
+that your primary has been failing
 for some time, it doesn't make sense to try it again.
-You put- You take it out of the load balancer, or your request path, and
-put it in a cooldown, and then, after a few minutes have passed, try putting that back again.
-
+You put the You take it out of the load balancer or your request path
+and put it in a cooldown, and then,
+after a few minutes have passed, try putting that back again.
 One interesting choice that you have to make here
 is where your failure counts live.
-
-You can decide to have the failure counts live in memory, on the instances that are serving your traffic,
+You can decide to have the failure counts live
+in memory on the instances that are serving your traffic,
 or you can have shared infra where your
 failure counts are shared across the fleet.
 There are trade-offs.
-
 If you want quick failovers, then fleet-wide helps.
-And with instance- With local
-state counters, the issue that you run into is whenever you change your deployment size,
+And with instance with local state counters, the issue that you run into is whenever you change your deployment size,
 your configuration and your expectations change.
-
 So, something to consider.
-
 What that clean diagram did not really show you are some of the other gotchas that I'm going to discuss.
 So, fallbacks are not transparent.
-While the industry is converging on an OpenAI API-compatible format,
-I would say there are still nuances, so you need to really test your fallbacks well.
-
-They can have differences in your
-tool calling schemas, token limits, stop reasons, and what have you.
+While the industry is converging on an OpenAI API compatible format,
+I would say there are still nuances.
+So, you need to really test your fallbacks well.
+They can have differences in your tool calling schemas, token limits, stop reasons, and what have you.
 So, with LLM gateways, you can have a normalization layer
 that can ensure that you can do
 cross-provider fallbacks as well.
-
 Another thing
 is streaming.
-
-It-
-So essentially, nobody wants to
-wait for 30 seconds to have a wall of text appear in front of them.
+It
+So, essentially,
+nobody wants to wait for 30 seconds to have a wall of text appear in front of them.
 So, there are use cases where streaming is absolutely required.
-But it comes as- at a cost.
+But it comes as at a cost.
 You trade away your levers.
-You cannot- Once you've decided to go with provider A,
+You cannot Once you've decided to go with provider A,
 you have to continue going with provider A.
 You cannot midstream change the providers.
 Whatever has been sent to the client, it's done.
 And that's where the "Something went wrong" message, that's the one that you see.
-
-It's not because of laziness. It's by design
+It's not because of laziness, it's by design
 that you see that, and it's one of the trade-offs.
-
 I would like to call out one other thing where I've seen teams trip over and over again.
-They really provision and test their primary providers really well,
-but
-the second provider, the fallback provider, doesn't necessarily get the same level of love.
-And I would argue that your throughputs, or your capacity, or your headroom
+They really provision and test their primary providers really well.
+But they the second provider, the fallback provider, doesn't necessarily get the same level of love.
+And I would argue that your throughputs or your capacity or your head room
 should be even higher for the second
-provider, or the fallback provider,
+provider, or for the fallback provider,
 because that's your last line of defense.
 If that goes down, your application goes down.
-
 Let's discuss latencies.
 Availability failures are right in your face.
 They fail.
-You get alarmed. You get paged.
-But
-high latencies can be the quiet ones.
+You get alarmed.
+You get paged.
+But high latencies can be the quiet ones.
 And they need to receive more love
 than, I would say, tuning your services for just availability.
-
-One thing to call out:
-a gateway may run mixed workloads,
-and you can have embedding- embedding requests that take just less than a second.
+One thing to call out,
+a gateway may run mixed workloads.
+And you can have embedding embedding requests that take just
+less than a second.
 You can have classification requests that take less than a second.
 You have chat requests taking 3 seconds,
 and reasoning requests taking a long time.
-
 Quick show of hands if you measure
 your aggregate latency for your entire service.
-
-Well, that was a trick question. Sorry. You shouldn't. It doesn't make sense. It's a lie.
-
+Well, that was a trick question, sorry.
+You shouldn't.
+It doesn't make sense.
+It's a lie.
 You should be tracking your p99 per model, per route,
 not a gateway-wide number.
-Gateway-wide number doesn't make sense, especially if you're running mixed workloads,
-and I hope you're not, for those who raised your hand.
-
-Another thing
-that can really- I cannot emphasize this enough, is for you to set timeouts on per-model class, per-route.
-
-That's where- That's the number one root cause of your silent outage.
-If you don't have a timeout,
-your gateway thinks your- your request is being happily served, while it is not.
-
-And I'll leave you with this message for- for latencies specifically:
-a reasoning model's normal
-is actually a chat model's outage, so you definitely need to track latency per route.
-
-Okay, this is the most painful, or the- the slide that has given me the most scars,
+Gateway-wide number doesn't make sense, especially if you're running mixed workloads.
+And I hope you're not, for those who raised your hand.
+Another thing that can really I cannot emphasize this enough is for you to set timeouts on per model class, per route.
+That's where That's the number one root cause of your silent outage.
+If you don't have a time out,
+your gateway thinks you're your request is being happily served while it is not.
+And I'll leave you with this message for for latencies,
+specifically:
+A reasoning model's normal
+is actually a chat model's outage.
+So, you definitely need to track latency per route.
+Okay, this is the most painful, or the the slide that has given me the most scars,
 which is reasoning and router models.
-
 So,
 this is where, truly, the latency is unpredictable.
 And
 reasoning models,
-they do not give you-
-They- They're highly undeterministic, more deterministic- undeterministic than your normal models.
-You cannot set the temperature to zero in many cases,
+they do not give you
+they they're highly undeterministic, more deterministic undeterministic than your normal models.
+You cannot set the temperature to zero, in many cases,
 and the same prompt
 can take somewhere from 2 seconds to 60 seconds.
 And we've seen that in production where p99 suddenly popped to 60 seconds for no good reason.
-So, that's-
-While there's no magical solution to it,
+So, that's While there is no magical solution to it,
 I would recommend that you at least start with
 fixing the reasoning level per route.
 So, with router models,
 they hide that abstraction behind you, like they pick which models to run.
-And I would highly recommend that you at least
-make as much-
-you make requests as deterministic as possible
-within an undeterministic system.
-
+And I would highly recommend that you at least make as much
+you make request as deterministic as possible
+within undeterministic system.
 Another idea
 is hedging the tail.
-You can have a-
-You can fire another request if your primary request actually consumed, let's say, p90 of your latency budget.
-
-This can hedge the- This can really hedge the
-p99 tail for- for your services.
-
-All right. This is one of my favorite ones.
-To keep your models secure, you need to have guardrails.
+You can have a
+You can fire another request if your primary request actually consumed let's say p90 of your latency budget.
+This can hedge the This can really hedge the
+p99 tail
+for for your services.
+All right.
+This is one of my favorite ones.
+To keep your model secure,
+you need to have guardrails.
 And with that,
 guardrails are necessary for preventing your services from prompt injection attacks,
 keeping PII filters in place,
 having toxicity filters, keeping the LLMs to stop swearing at your customers.
 All those good things.
-But
-just like a model provider,
+But just like a model provider,
 there are trade-offs, too.
-Guardrails are just like another service
+Guardrails
+are just like another service
 that can go down, that can be unreliable.
-And that's where you need to choose:
-do you fail open,
+And that's where you need to choose.
+Do you fail open
 or do you fail close?
 When I say fail open,
 you can still serve the request even if your guardrails are down.
 Fail close, you block the request and say, "Hey, I'm not available."
 That's the trade-off between availability and security to certain extent.
-While there's a no universal answer, it really depends on your use case.
-You can decide like, for example, a toxicity filter, if it's not up and running, you can still serve that request.
-
+While there is no universal answer, it really depends on your use case.
+You can decide, like for example, a toxicity filter, if it's not up and running, you can still serve the request.
 So,
 the default choice should be the worst case that you can live with.
-
 There are a few things
 that you can actually do to
 improve the behavior of your systems
-in face of, you know, guardrails being down and- and managing just unreliability of the guardrails themselves.
+in face of,
+you know, guardrails being down and and managing just unreliability of the guardrails themselves.
 So, the first is time budget.
-
 Your request
 should never be bound by your guardrail timing.
-It should always be the LLM that is the rate-determining step.
-So make sure that you have timeouts in place,
+It should always be the LLM that is the rate-determining
+step.
+So, make sure that you have time outs in place,
 and those guardrails run with a specific time budget.
-
 Another important thing is fallback.
-You've heard- You probably know, and I've talked about it,
-we always discuss fallbacks with regards to model providers.
+You've heard you probably know and I've talked about it.
+We always discuss fallbacks with regards to model providers.
 But guardrails are critical services, too,
 where you can consider
 fallbacks, have secondary providers, secondary checks, cached decisions,
-to keep your service available when
+to keep your service available
+when
 a guardrail provider is down.
-
 Another interesting choice that pops up with regards to guardrails
 is the placement of the guardrails.
-
-Typically, you can place the guardrail in three ways.
-You can have a pre-hook that runs- where the guardrail actually runs on the input.
-You can- And that's probably the safest,
-but it does add serial latency to your requests.
-
-Another one is in parallel. This is one of my favorites,
-but just to call out,
-streaming wouldn't work well here with- with parallel.
+Typically, you can place the guardrail in three ways:
+You can have a pre-hook that runs where the guardrail actually runs on the input.
+You can and that's probably the safest,
+but it does add serial latency
+to your requests.
+Another one is in parallel.
+This is one of my favorites, but just to call out,
+streaming wouldn't work well pure with with parallel.
 So, if you're specially producing structured output, please don't stream them.
-Try to save your latencies and run these guardrails concurrently
-for your structured outputs.
-Another one is post-hooks. These are best for
-output monitoring, auditing your outputs, and- and so forth.
-
+Try to save your latencies and run run these guardrails concurrently
+for a structured outputs.
+Another one is post-hooks.
+The these are best for
+output monitoring, auditing your outputs,
+and and so forth.
 So, so far,
-we've all- I've discussed all the things that can go wrong with regards to our dependencies.
-
-We haven't discussed that we are actually adding another dependency in the request path itself, which is the central-
+we've all I've discussed all the things that can go wrong
+with regards to our dependencies.
+We haven't discussed that we are actually adding another dependency in the request path itself, which is the central
 or which is the LLM gateway itself.
-There are a few things where we have been bitten by, and we've learned some lessons that I want to share with you
+There are a few things where we have been bitten by,
+and we've learned some lessons that I want to share with you,
 if you're working on an LLM gateway or using one.
-
 One is shared limits.
-
 Make sure that your API keys are segregated
 per route, per use case,
 to the most granular
-possible-
+possible
 to the most granular thing that you can imagine.
-
 Having a noisy tenant
 can be one of the biggest problems here.
-
 Another thing is
-load shedding. This is a feature that you should,
-as part of your runbooks, game days,
+load shedding.
+This is a feature that you should, as part of your runbooks, game days,
 make sure that the gateway that you're using supports load shedding,
 because when you have a retry storm, it becomes really hard to just scale out.
 You cannot simply scale out services that is under a retry storm.
 And all these web servers, they have an internal queue,
-and they're configurable. Make sure that they're bounded and they cannot request- they cannot accept requests that are unbounded.
+and they're configurable.
+Make sure that they're bounded and they cannot request they cannot accept requests
+that are unbounded.
 And if you want to have some custom logic, you can even have traffic prioritization here as well to make sure, under load, your most important use cases
 get served well.
-
 Last thing
 that I wanted to discuss
 is the whole idea of a central gateway itself.
 It is a single point of failure.
-So if you're thinking of having a central gateway for your entire company for- to LLMs,
-I would recommend rethink that and see what are the reasons that you want it.
-
-What I've noticed is that in most scenarios,
-it's not the central gateway that they want. They want centralized governance.
-
-And there is a path forward where you can actually decentralize the gateway
-and still centralized government- governance.
+So, if you're thinking of having a central gateway for your entire company for to LLMs,
+I would recommend
+rethink that and see what are the reasons that you want it.
+What I've noticed is that, in most scenarios,
+it's not the central gateway that they want.
+They want centralized governance.
+And there is a path forward
+where you can actually decentralize the gateway
+and still centralize government governance.
 So,
 do not try to centralize your traffic,
 but you can have plug-ins, you can have custom code
 that can centralize your governance.
 Governance can be in the form of cost tracking,
-rate limit managing management, and there are other solutions possible.
+rate limit managing management,
+and there are other solutions possible.
 So, explore those before you chart on
 having one central gateway for your entire company.
-
 It can be managed by a single team, but I wouldn't recommend deploying it
-as a single deployment for the entire company,
+as a single
+deployment for the entire company,
 even though it's distributed.
-
 With that said, I want to end this talk on a personal note.
 So, it is my son's birthday today,
 and I'm here talking to strangers about circuit breaking.
-
 So,
 the least you can do for me is please go and prevent one incident for me and for your customers.
-Thank you. If you have any questions.
+Thank you.
+If you have any questions,
+yeah.

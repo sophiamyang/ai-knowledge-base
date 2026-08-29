@@ -8,7 +8,7 @@ source: "youtube"
 source_name: "AI Engineer"
 content_type: ""
 speakers:
-  - "Varun Shenoy, Cofounder, Long Lake"
+  - "Varun Shenoy: Cofounder, Long Lake"
 url: "https://www.youtube.com/watch?v=B0fjR3yaZFU"
 origin: "https://www.youtube.com/watch?v=B0fjR3yaZFU"
 published: "2026-08-28"
@@ -33,74 +33,64 @@ Source: youtube
 Original link: https://www.youtube.com/watch?v=B0fjR3yaZFU
 
 ## One-Sentence Takeaway
-Diffusing AI into real-world services requires owning the operations, earning autonomy incrementally, and codesigning solutions in person—not just shipping models.
+AI diffusion in services requires owning operations to align incentives, co-designing workflows in person, and building evals grounded in real-world outcomes rather than demos.
 
 ## Short Summary
-AI demos impress, but real deployment in services businesses (property management, HR, travel) lags because diffusion is slow and requires process overhauls, like electricity in factories. Long Lake acquires and operates these businesses, so they bear the cost of failure and can iterate on agents that climb from copilots to coworkers.
-
-The core challenge is building asynchronous agents for knowledge work that isn’t parallelized like coding, using real-world traces and ground truth (e.g., “did the roof get fixed?”) to create meaningful evals and continual learning loops. Codesign only works in person—embed in workflows, show up at trade shows, and engage users directly.
+Varun Shenoy argues that deploying AI in services businesses is a diffusion problem akin to electricity’s slow adoption: technology alone is insufficient without retraining, process changes, and deep integration. Long Lake acquires and operates businesses (e.g., property management, corporate travel) to control outcomes, ensuring AI failures are their problem—not a customer’s. The core challenge is moving from copilot to asynchronous, long-running agents for non-code knowledge work, where parallelization and ground-truth evals (e.g., "did the roof get fixed?") are critical. Diffusion succeeds only through extreme software-service co-design, requiring in-person collaboration to understand and embed AI into existing workflows.
 
 ## Featured Speakers
-- Varun Shenoy, Cofounder, Long Lake
+- Varun Shenoy: Cofounder, Long Lake
 
 ## Main Ideas
-- **Diffusion is the bottleneck**: Like electricity in factories, AI adoption in services requires replacing existing workflows and retraining people, not just better models.
-- **Own the outcome**: By acquiring and operating businesses, Long Lake aligns incentives—when AI fails, the cost is internal, accelerating iteration and accountability.
-- **Autonomy must be earned**: Agents should progress from copilots to coworkers incrementally, as user trust and model capability allow; jumping straight to full autonomy rarely works.
-- **Asynchronous agents for services are unsolved**: Unlike coding (where parallel sandboxes work), knowledge work is serial and lacks clear async patterns; this is a key frontier.
-- **Real-world traces enable real evals**: Ground truth from operations (e.g., roof repaired, books closed) creates actionable feedback loops, turning hill-climbing benchmarks into regression tests over time.
+- **Diffusion is the bottleneck**: Like electricity, AI’s real-world impact lags behind demos because adoption requires process overhauls, retraining, and replacing legacy systems—not just better models.
+- **Ownership aligns incentives**: By acquiring and operating businesses, Long Lake bears the cost of AI failures, forcing them to solve real problems (e.g., closing books with missing receipts) rather than selling software and blaming customers.
+- **Agent maturity ladder**: Progressing from copilots to coworkers demands earning autonomy incrementally; asynchronous agents for non-code work (e.g., services) remain unsolved, unlike coding where parallelization is trivial.
+- **Ground-truth evals**: Real-world traces (tool calls, hiccups, outcomes) enable evals tied to business results (e.g., "was the roof repaired?"), creating a flywheel for continual learning and regression testing.
+- **Co-design requires presence**: AI cannot be integrated over Zoom; in-person engagement (trade shows, mountain biking with users) reveals workflow nuances and builds trust for adoption.
 
 ## Questions And Answers
-- **Q: Why don’t services businesses use AI yet?**
-  A: Valuable tasks (e.g., closing books with missing receipts, coordinating roof repairs) aren’t on the internet, and workflows are serial, not parallel like coding. Models lack the data and the process integration.
+- **Why hasn’t AI changed services businesses yet?**
+  Diffusion takes time. Even with capable models, businesses must rip out old processes, retrain staff, and accept short-term disruption—just as Ford’s electrified assembly line required 40+ years after Edison’s demo.
 
-- **Q: How do you build better agents for these tasks?**
-  A: Generate rich traces from real work (tool calls, hiccups, outcomes), use them for evals and post-training on out-of-distribution data, and customize per company, user, and client.
+- **What’s missing from today’s agent demos?**
+  Demos focus on tasks with clear, internet-available data (e.g., coding, flight booking), but the most valuable work (e.g., coordinating roof repairs, scoping blueprints) lacks digital traces and is highly customized per company, user, or client.
 
-- **Q: How do you drive initial adoption?**
-  A: Codesign in person—embed tools in existing systems (Excel, ERP), attend conferences, and engage users directly; usage and improvement are a single loop.
+- **How do you measure agent success in the real world?**
+  Ground-truth outcomes: Did the books close? Was the roof fixed? These evals are built from traces of real work, including implicit feedback (e.g., differences between AI-generated data and final submissions).
 
 ## Notable Details
 - Long Lake has acquired 35 services businesses (property management, architecture, HR) and took American Express Global Business Travel private for $6.3B.
-- Their team is ~40 people, over half in technology, with backgrounds from Palantir, Ramp, Glean, Blackstone, and HIG.
-- Engineers parallelize work (e.g., launching 10 jobs), but services workers (e.g., processing emails) do not—this is a key gap for async agents.
-- Traces capture implicit feedback (e.g., diffs between AI-generated data and final submissions) and explicit feedback (thumbs up/down, notes).
-- Continual learning and enablement must be unified: more usage → better agents → more usage.
+- Their team is ~40 people, with >50% focused on technology, data, and deployment.
+- Engineers naturally parallelize work (e.g., launching 10 jobs, accepting out-of-order completion), but services work (e.g., email, vendor coordination) is traditionally serial—async agents for this domain are an open problem.
+- Post-training models on proprietary, out-of-distribution business data (e.g., 20-year-old software workflows) to handle tasks frontier models cannot.
+- Learning loops merge continual learning (model improvement) and enablement (adoption): usage drives better agents, which drives more usage.
 
 ## Actionable Takeaways
-- Start with copilots, not coworkers—earn autonomy incrementally in real workflows.
-- Focus on tasks with clear ground truth (e.g., “was the roof fixed?”) to build meaningful evals.
-- Codesign in person: embed tools in existing systems and engage users directly to reduce adoption friction.
-- Treat continual learning and enablement as one loop—usage drives improvement, which drives more usage.
-- For services, async agents require new patterns—parallelization isn’t natural, so experiment with workflow-specific solutions.
+- **Prioritize ground-truth evals**: Design agent tasks around measurable outcomes (e.g., "roof repaired") to create feedback loops that improve models and workflows.
+- **Co-design in person**: Embed with users to observe real workflows; remote collaboration misses critical context for services AI.
+- **Start with copilots, earn autonomy**: Deploy low-risk, synchronous tools first, then gradually introduce async/long-running agents as trust and capability grow.
+- **Acquire or partner deeply**: Ownership or operational control ensures alignment between AI failures and business accountability.
+- **Target serial workflows**: Focus on parallelizing traditionally linear tasks (e.g., inbox management, vendor coordination) as a high-leverage opportunity.
 
 ## People, Companies, Tools, And Links Mentioned
-- [Varun Shenoy](https://varunshenoy.com)
-- [Varun Shenoy on X](https://x.com/varunshenoy_)
-- Long Lake
+- [Long Lake](https://www.linkedin.com/in/varunshenoy)
+- Varun Shenoy: [Twitter](https://x.com/varunshenoy_), [LinkedIn](https://www.linkedin.com/in/varunshenoy), [Website](https://varunshenoy.com)
+- American Express Global Business Travel
 - Elad Gil
 - General Catalyst
 - Alpha Wave
-- American Express Global Business Travel
-- Palantir
-- Ramp
-- Glean
-- Blackstone
-- HIG
+- Palantir, Ramp, Glean, Blackstone, HIG
 - Edison’s Pearl Street Station
-- Ford
-- Jensen Huang (NVIDIA)
-- Claude Code
-- Codex
-- Claude Cowork
-- MCP (Model Context Protocol)
+- Ford’s electrified assembly line (1924)
+- Claude Code, Codex, Claude Cowork
+- MCPs (Model Context Protocols)
 
 ## Reading Priority
 
-High – A rare, concrete look at the operational and cultural barriers to AI adoption in services, with actionable insights from a practitioner owning the outcomes.
+High – A rare, concrete look at the operational and cultural barriers to AI adoption in services, backed by a novel ownership model and hard-won lessons from real deployments.
 
 ## Connections
 
 - Source: [[sources/AI Engineer|AI Engineer]]
 - Topics: [[topics/AI Agents|AI Agents]], [[topics/Enterprise AI|Enterprise AI]], [[topics/Model Evaluation|Model Evaluation]], [[topics/Product Development|Product Development]]
-- Speaker: [[people/varun-shenoy|Varun Shenoy]]
+- Speaker: [[people/varun-shenoy-cofounder|Varun Shenoy: Cofounder]]

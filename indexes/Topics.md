@@ -19,4 +19,5 @@ type: "topic-index"
 - [[topics/Model Training|Model Training]]
 - [[topics/Open Source AI|Open Source AI]]
 - [[topics/Product Development|Product Development]]
+- [[topics/Retrieval|Retrieval]]
 - [[topics/Web Platform|Web Platform]]

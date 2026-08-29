@@ -1,12 +1,12 @@
 ---
 title: "Eyal Blum"
 aliases:
-  - "Eyal Blum, Software Engineer at Figma"
+  - "Eyal Blum, Figma"
 type: "person"
 ---
 
 # Eyal Blum
 
-Role or affiliation: Software Engineer at Figma
+Role or affiliation: Figma
 
 Appearances and related notes appear in the backlinks panel.

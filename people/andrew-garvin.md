@@ -1,12 +1,12 @@
 ---
 title: "Andrew Garvin"
 aliases:
-  - "Andrew Garvin, cofounder of Metronome (acquired by Stripe)"
+  - "Andrew Garvin, Stripe"
 type: "person"
 ---
 
 # Andrew Garvin
 
-Role or affiliation: cofounder of Metronome (acquired by Stripe)
+Role or affiliation: Stripe
 
 Appearances and related notes appear in the backlinks panel.

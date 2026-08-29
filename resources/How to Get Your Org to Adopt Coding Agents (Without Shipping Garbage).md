@@ -8,7 +8,7 @@ source: "youtube"
 source_name: "AI Engineer"
 content_type: ""
 speakers:
-  - "Eyal Blum, Software Engineer at Figma"
+  - "Eyal Blum, Figma"
 url: "https://www.youtube.com/watch?v=5Bn0xro2ol8"
 origin: "https://www.youtube.com/watch?v=5Bn0xro2ol8"
 published: "2026-08-28"
@@ -32,51 +32,55 @@ Source: youtube
 Original link: https://www.youtube.com/watch?v=5Bn0xro2ol8
 
 ## One-Sentence Takeaway
-The fastest way to win over skeptical engineers is to treat their objections as a roadmap for verification and safety, then let them see the fixes make their own work easier.
+The best engineers resist AI agents the longest because they see every failure mode first, so the fastest path to adoption is to treat their objections as a roadmap for verification and safety.
 
 ## Short Summary
-Adoption of coding agents at Figma follows a three-act pattern: early wins, painful failures, then disciplined guardrails. The best engineers resist longest because they carry undocumented context and see every failure mode first; their skepticism is a signal of missing verification. Agency loss and bloated communication are real costs, but can be mitigated by shifting from prompting to planning, encoding successful workflows into deterministic tests, and marking AI-generated text so readers can allocate scarce attention.
+AI adoption in engineering organizations follows a three-act arc: early wins, painful failures, and then disciplined use with guardrails. At Figma, the most skilled engineers—who hold the most institutional context—are the last to adopt agents because they encounter every gap in verification and trust the tools the least. The solution is to let these skeptics define the roadmap for making agents safe, as their complaints directly map to missing validation layers.
+
+Beyond trust, adoption creates friction: developer agency and job satisfaction can drop when coding turns into prompting, and communication swells with low-signal AI-generated text. Figma counters this with attention-aware conventions (e.g., human-written summaries atop AI-generated content) and by restoring craft through detailed planning, where engineers spend a week designing a plan that an agent then implements overnight.
 
 ## Featured Speakers
-- Eyal Blum, Software Engineer at Figma
+- Eyal Blum – Software Engineer at Figma
 
 ## Main Ideas
-- Adoption curves are uneven: early enthusiasts hit walls, then teams must add guardrails to reach reliable use; coexisting workflows require support without forcing uniformity.
-- The strongest engineers adopt last because they hold the codebase together with mental duct tape and see every failure first; their objections map directly to missing verification.
-- Shift from prompting to planning: spend a week crafting a detailed, verifiable plan, then let the agent implement overnight; this restores agency and accelerates review.
-- Build a testing pyramid for agents: push as much as possible into deterministic checks (linters, compilers, unit tests), use agents for architectural standards, and reserve human review for functional correctness.
-- Attention-aware communication: explicitly mark human-written vs. AI-generated text so readers can prioritize their limited attention.
+- The strongest engineers resist agents the longest because they carry undocumented institutional knowledge and see every failure mode first; their objections are a prioritized list of where verification is missing.
+- Investing in verification (e.g., deterministic tests, linting, compiler checks) and shifting left—moving tasks from humans to agents—unlocks the most productivity, especially when successful agent behaviors are encoded into repeatable, token-efficient flows.
+- Planning replaces prompting as the primary creative act: engineers regain agency and joy by spending a week crafting detailed, independently verifiable plans that agents then implement, often overnight.
+- A testing pyramid for agents mirrors traditional testing: maximize deterministic checks (unit tests, linting), use agents for architectural reviews, and reserve human judgment for high-level functional validation.
+- Attention-aware communication is critical: explicitly mark human-written vs. AI-generated content (e.g., PR descriptions start with a human summary) to preserve scarce human attention and signal quality.
 
 ## Questions And Answers
 - **Why do the best engineers adopt agents last?**
-  They carry institutional context nobody wrote down, see every failure mode first, and become bottlenecks; their skepticism is a prioritized list of where verification is missing.
+  They hold the most context, see every failure mode first, and act as bottlenecks because they prevent bad outputs; their skepticism is a signal of missing verification, not resistance to change.
 
-- **How can planning replace prompting?**
-  Write a detailed plan with a clear "why," break it into independently verifiable phases, and send it to the agent only after review; this restores craft and reduces drift.
+- **How can teams restore developer agency with agents?**
+  Shift the creative work to planning: engineers design detailed, verifiable plans (with clear "why" and independent validation gates), then hand off implementation to agents, which restores craft and reduces prompt-and-wait fatigue.
 
-- **What is the simplest cultural fix for bloated AI communication?**
-  Start PR descriptions and messages with a human-written line, then add generated text below; readers know where to focus.
+- **What’s a practical way to manage AI-generated communication?**
+  Adopt conventions like human-written summaries at the top of AI-generated content (e.g., PR descriptions), so readers know where to focus attention and what to treat as lower-signal.
 
 ## Notable Details
-- Plans often take a week to write and align across teams, then agents implement overnight; one example delivered six weeks of coding work in one week including review.
-- A plan should be broken into PR-sized chunks; if a chunk feels too big to review without a coffee break, it is too big.
-- Sending unmarked AI analysis to a senior skeptic was called out as sloppy; marking intent and authorship prevented repeat offenses.
-- Tagging an agent in Slack to close a loop normalizes everyday use and lowers friction for hesitant teammates.
+- Figma’s internal adoption is uneven: some teams are AI-forward while others remain skeptical, and all must coexist.
+- Developer burnout rises when coding (a source of flow and pride) turns into a prompt-and-wait cycle.
+- Documents and Slack messages have grown 3–4x in length without adding proportional value; marking AI vs. human content helps.
+- Using Test-Driven Development (TDD) with agents—writing tests first, then asking the agent to write code to pass them—yields better results than writing code first and then tests.
+- A single well-structured plan can replace 6 weeks of coding work, with the agent implementing 20+ PRs (10–100 lines each) overnight after a week of human planning and review.
 
 ## Actionable Takeaways
-- Treat skepticism as a roadmap: hand the strongest critics ownership of the verification and safety plan.
-- Encode successful agent workflows into deterministic tests to save tokens and time.
-- Adopt attention-aware communication: label human vs. AI text so readers can triage.
-- Prefer planning over prompting: invest in detailed, verifiable plans and let agents execute.
-- Start small in existing tools (e.g., tagging agents in Slack) to normalize use before introducing fancy workflows.
+- Treat skepticism from top engineers as a roadmap: their complaints about agent failures are prioritized tasks for adding verification and guardrails.
+- Encode successful agent behaviors into deterministic flows (e.g., tests, linting) to save tokens and time, and to ensure repeatability.
+- Adopt attention-aware communication norms (e.g., human-written summaries atop AI text) to preserve signal and respect readers’ time.
+- Restore developer agency by emphasizing planning over prompting: spend a week on a detailed, verifiable plan, then let the agent implement it.
+- Start with low-friction, in-flow agent use (e.g., tagging an agent in Slack to close a loop) to normalize adoption before introducing complex workflows.
 
 ## People, Companies, Tools, And Links Mentioned
-- [Figma](https://www.figma.com)
+- Figma
 - Playwright MCP
+- [Eyal Blum’s LinkedIn](https://www.linkedin.com/in/eyalg/)
 
 ## Reading Priority
 
-Medium – A pragmatic, experience-backed playbook for enterprise adoption of coding agents, with concrete workflows and cultural practices.
+Medium – A practical, experience-driven look at the cultural and technical hurdles of adopting coding agents, with actionable patterns for verification, planning, and communication.
 
 ## Connections
 
