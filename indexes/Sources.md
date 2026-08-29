@@ -6,6 +6,7 @@ type: "source-index"
 # Sources
 
 - [[sources/AI & I by Every|AI & I by Every]]
+- [[sources/AI Engineer|AI Engineer]]
 - [[sources/Latent Space|Latent Space]]
 - [[sources/Lenny's Podcast|Lenny's Podcast]]
 - [[sources/Lex Fridman Podcast|Lex Fridman Podcast]]
