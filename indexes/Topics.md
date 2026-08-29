@@ -14,6 +14,8 @@ type: "topic-index"
 - [[topics/Developer Tools|Developer Tools]]
 - [[topics/Enterprise AI|Enterprise AI]]
 - [[topics/Foundation Models|Foundation Models]]
+- [[topics/Model Evaluation|Model Evaluation]]
+- [[topics/Model Inference|Model Inference]]
 - [[topics/Model Training|Model Training]]
 - [[topics/Open Source AI|Open Source AI]]
 - [[topics/Product Development|Product Development]]
