@@ -41,10 +41,23 @@ whole point of persisting this repo is to skip work already done.
 
 ```
 raw_transcripts/YYYY-MM-DD-<source_type>-<slug>-<id>.md
-resources/<slug>-<id>.md
+resources/<Readable Title>.md
 ```
 
-The date is when the item was ingested, not when it was published.
+The two are deliberately different, and it matters for lookup:
+
+- **Raw transcripts carry the id in the filename**, so an existing one can be
+  found by globbing `*-<id>.md`. The date is the ingest date, not the
+  publication date.
+- **Resource notes do not.** They are named for human legibility, because these
+  are read in Obsidian. Finding one by id therefore means scanning `resources/`
+  and parsing frontmatter — there is no filename shortcut. Do not add an id
+  suffix to make lookup cheaper; it would rename every existing note.
+
+Because resource filenames come from titles, two items with titles that reduce
+to the same string collide. Resolve by checking the `id` in the existing note's
+frontmatter: same id means it is the same item and should be rewritten in place;
+a different id needs a distinct filename.
 
 ### 3. Frontmatter
 
