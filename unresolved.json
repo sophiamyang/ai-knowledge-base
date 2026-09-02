@@ -1,0 +1,62 @@
+{
+  "a60cf395f4b6fadf": {
+    "id": "a60cf395f4b6fadf",
+    "url": "https://www.youtube.com/watch?v=7A65O-0lvKE",
+    "source_type": "youtube",
+    "title": "Which AI startups actually land enterprise contracts? — Brian Lewis, Millennium",
+    "origin": "https://www.youtube.com/watch?v=7A65O-0lvKE",
+    "source_name": "AI Engineer",
+    "content_type": null,
+    "audio_url": null,
+    "published": "2026-08-29",
+    "reason": "no transcript could be obtained",
+    "attempts": 1,
+    "first_seen": "2026-09-02",
+    "last_attempt": "2026-09-02"
+  },
+  "b5b0f260591b99ac": {
+    "id": "b5b0f260591b99ac",
+    "url": "https://www.youtube.com/watch?v=hD9-V56FNRI",
+    "source_type": "youtube",
+    "title": "AI Agents Are Just Distributed Systems Now — Salman Munaf, TikTok",
+    "origin": "https://www.youtube.com/watch?v=hD9-V56FNRI",
+    "source_name": "AI Engineer",
+    "content_type": null,
+    "audio_url": null,
+    "published": "2026-08-29",
+    "reason": "no transcript could be obtained",
+    "attempts": 1,
+    "first_seen": "2026-09-02",
+    "last_attempt": "2026-09-02"
+  },
+  "6cbcb89c50728ad3": {
+    "id": "6cbcb89c50728ad3",
+    "url": "https://www.youtube.com/watch?v=4GmHpHyoKmo",
+    "source_type": "youtube",
+    "title": "Canva cofounder and COO Cliff Obrecht in conversation with John Collison",
+    "origin": "https://www.youtube.com/watch?v=4GmHpHyoKmo",
+    "source_name": "Stripe",
+    "content_type": null,
+    "audio_url": null,
+    "published": "2026-08-25",
+    "reason": "no transcript could be obtained",
+    "attempts": 1,
+    "first_seen": "2026-09-02",
+    "last_attempt": "2026-09-02"
+  },
+  "c33e0e0bea583561": {
+    "id": "c33e0e0bea583561",
+    "url": "https://www.youtube.com/watch?v=ZlLV9ZHauAM",
+    "source_type": "youtube",
+    "title": "When AI Stops Being a Project: Turning Technology into Real Value for Patients and Providers",
+    "origin": "https://www.youtube.com/watch?v=ZlLV9ZHauAM",
+    "source_name": "Stanford Online",
+    "content_type": null,
+    "audio_url": null,
+    "published": "2026-08-28",
+    "reason": "no transcript could be obtained",
+    "attempts": 1,
+    "first_seen": "2026-09-02",
+    "last_attempt": "2026-09-02"
+  }
+}
